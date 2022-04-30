@@ -5,12 +5,14 @@ import logging
 import json
 
 # Initialize the bot
-bot = commands.Bot(command_prefix="k!")
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix="k!", intents=intents)
 
 # Load config file
 with open('config.json') as config_file:
     config = json.load(config_file)
     bot.config = config
+    bot.owner_id = config['owner']
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
