@@ -25,7 +25,8 @@ class Accuse(Modal):
         # Find defendants
         defendants = await utils.find_user_by_name_and_tag(self.children[0].value, interaction.guild,
                                                            multiple=True)
-        embed.add_field(name="被告人", value=", ".join([str(x) for x in defendants]))
+        defendant_strings = []
+        embed.add_field(name="被告人", value=", ".join([x.mention for x in defendants]))
 
         # Find assignee
         try:
@@ -36,7 +37,7 @@ class Accuse(Modal):
             content = None
 
         # Prepare the embed
-        embed.add_field(name="預期受理人", value=assignee)
+        embed.add_field(name="預期受理人", value=assignee.mention)
         embed.add_field(name="原因", value=self.children[2].value)
         # Admin Side
         case_message = await self.bot.get_channel(self.bot.config["channels"]["cases"]).send(content=content,
