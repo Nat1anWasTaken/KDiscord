@@ -3,7 +3,6 @@ from discord.ext import commands
 from discord.ui import View
 from modals.accuse import Accuse
 from buttons.bell import Bell
-from utils import find_user_by_name_and_tag
 
 
 class Court(commands.Cog):

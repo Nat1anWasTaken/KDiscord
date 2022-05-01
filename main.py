@@ -3,6 +3,11 @@ from discord.ext import commands
 import os
 import logging
 import json
+from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+
+# Logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 # Initialize the bot
 intents = discord.Intents.all()
@@ -14,7 +19,10 @@ with open('config.json') as config_file:
     bot.config = config
     bot.owner_id = config['owner']
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+# Connect to mongodb
+mongo = MongoClient(os.getenv("MONGO_DB_URL"), server_api=ServerApi('1'))
+db = mongo.main
+bot.database = db
 
 
 @bot.event
