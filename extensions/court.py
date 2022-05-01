@@ -20,13 +20,15 @@ class Court(commands.Cog):
 
     @commands.is_owner()
     @commands.command(name="send_trigger_message", description="發送觸發訊息")
-    async def send_trigger_message(self, ctx, channel: discord.TextChannel):
+    async def send_trigger_message(self, ctx, channel: discord.TextChannel = None):
         """
         發送觸發訊息
         :param ctx: Context
         :param channel: The channel to send the message to
         :return:
         """
+        if channel is None:
+            channel = ctx.channel
         embed = discord.Embed(title="鈴鐺", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=discord.Colour.blue())
         view = View()
         view.add_item(Bell(self.bot))

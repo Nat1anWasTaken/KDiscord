@@ -1,6 +1,7 @@
 import discord
 import re
 from errors import *
+import asyncio
 
 
 async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: bool = True):
@@ -13,8 +14,9 @@ async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: b
     """
     if multiple:
         users = text.split(",")
-        # Search for each user
         result = []
+        # Find users in the guild,
+        # If username and discriminator equals to the target user, add them to the result list
         for member in guild.members:
             if f"{member.name}#{member.discriminator}" in users:
                 result.append(member)
