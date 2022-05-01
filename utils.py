@@ -1,7 +1,6 @@
 import discord
 import re
 from errors import *
-import asyncio
 
 
 async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: bool = True):
@@ -27,3 +26,16 @@ async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: b
         for member in guild.members:
             if f"{member.name}#{member.discriminator}" == text:
                 return member
+
+
+async def has_admin(bot_config: dict, member: discord.Member):
+    """
+    Check if a member has admin roles
+    :param bot_config: The bot config
+    :param member: The member to check
+    :return: True if the member has admin permissions
+    """
+    for role in member.roles:
+        if role.id in bot_config["admin_roles"]:
+            return True
+    return False

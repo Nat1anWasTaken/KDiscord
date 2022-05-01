@@ -8,7 +8,7 @@ from buttons.accept import Accept
 
 
 class Accuse(Modal):
-    def __init__(self, bot) -> None:
+    def __init__(self, bot):
         """
         A Accuse modal.
         :param bot Your bot instance, used to get the channel.
@@ -31,13 +31,13 @@ class Accuse(Modal):
         # Find assignee
         try:
             assignee = await utils.find_user_by_name_and_tag(self.children[1].value, interaction.guild, multiple=False)
-            content = assignee.mention
+            content = None
         except errors.UnparseableText:
             assignee = None
             content = None
 
         # Prepare the embed
-        embed.add_field(name="預期受理人", value=assignee.mention)
+        embed.add_field(name="預期受理人", value=content)
         embed.add_field(name="原因", value=self.children[2].value)
         # Admin Side
         case_message = await self.bot.get_channel(self.bot.config["channels"]["cases"]).send(content=content,

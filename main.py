@@ -35,5 +35,4 @@ async def on_ready():
     logging.info("Done loading extensions")
 
 
-
 bot.run(os.getenv('TOKEN'))

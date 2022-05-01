@@ -1,4 +1,6 @@
 import discord
+import asyncio
+from utils import has_admin
 from discord.ext import commands
 from discord.ui import View
 from modals.accuse import Accuse
@@ -33,6 +35,17 @@ class Court(commands.Cog):
         view = View()
         view.add_item(Bell(self.bot))
         await channel.send(embed=embed, view=view)
+
+    @commands.Cog.listener(name="on_interaction")
+    async def on_interaction(self, interaction):
+        if interaction.type == discord.InteractionType.component:
+            if interaction.custom_id.startswith("accept."):  # Check if the interaction is an accept button
+                if not await has_admin(bot_config=self.bot.config, member=interaction.user):
+                    replied_interaction = await interaction.response.send_message(f"{interaction.user.mention} ❌ 你沒有權限使用這個按鈕")
+                    asyncio.get_event_loop().create_task(replied_interaction.delete_original_message(delay=3))
+                    return
+                case_id = interaction.custom_id.split(".")[1]
+                await interaction.response.send_message(f"您已接受了案件編號 {case_id} 的告訴")
 
 
 def setup(bot):
