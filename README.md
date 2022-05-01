@@ -1,6 +1,8 @@
 # KDiscord
 Litigation system for Yeecord Community
 
+This project **is current WIP**, it is **NOT WORKING** yet so don't try to host it.**
+
 
 ## Quickstart
 Before you start, you will need these things:
@@ -36,3 +38,7 @@ Before you start, you will need these things:
     ```shell 
     python main.py
     ```
+  
+## Todo
+* Court system
+* Ban Appeal 
