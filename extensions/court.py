@@ -40,7 +40,7 @@ class Court(commands.Cog):
     async def on_interaction(self, interaction):
         if interaction.type == discord.InteractionType.component:
             if interaction.custom_id.startswith("accept."):  # Check if the interaction is an accept button
-                if not await has_admin(bot_config=self.bot.config, member=interaction.user):
+                if not await has_admin(member=interaction.user):
                     replied_interaction = await interaction.response.send_message(f"{interaction.user.mention} ❌ 你沒有權限使用這個按鈕")
                     asyncio.get_event_loop().create_task(replied_interaction.delete_original_message(delay=3))
                     return

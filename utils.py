@@ -1,6 +1,10 @@
+import ast
+import os
+
 import discord
 import re
 from errors import *
+import json
 
 
 async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: bool = True):
@@ -28,14 +32,14 @@ async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: b
                 return member
 
 
-async def has_admin(bot_config: dict, member: discord.Member):
+async def has_admin(member: discord.Member):
     """
     Check if a member has admin roles
-    :param bot_config: The bot config
     :param member: The member to check
     :return: True if the member has admin permissions
     """
+    roles = ast.literal_eval(os.getenv("ADMIN_ROLES"))
     for role in member.roles:
-        if role.id in bot_config["admin_roles"]:
+        if role.id in roles:
             return True
     return False

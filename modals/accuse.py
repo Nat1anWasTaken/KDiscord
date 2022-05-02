@@ -5,6 +5,7 @@ from discord.ui import Modal, InputText, View
 from discord import InputTextStyle
 import asyncio
 from buttons.accept import Accept
+import os
 
 
 class Accuse(Modal):
@@ -39,7 +40,7 @@ class Accuse(Modal):
         embed.add_field(name="預期受理人", value=content)
         embed.add_field(name="原因", value=self.children[2].value)
         # Admin Side
-        case_message = await self.bot.get_channel(self.bot.config["channels"]["cases"]).send(content=content,
+        case_message = await self.bot.get_channel(int(os.getenv("CASES_CHANNEL"))).send(content=content,
                                                                                              embed=embed)
         embed.set_footer(text="案件編號: " + str(case_message.id))
         view = View()

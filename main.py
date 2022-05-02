@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import os
 import logging
-import json
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
@@ -12,12 +11,6 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 # Initialize the bot
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="k!", intents=intents)
-
-# Load config file
-with open('config.json') as config_file:
-    config = json.load(config_file)
-    bot.config = config
-    bot.owner_id = config['owner']
 
 # Connect to mongodb
 mongo = MongoClient(os.getenv("MONGO_DB_URL"), server_api=ServerApi('1'))
@@ -33,6 +26,7 @@ async def on_ready():
             bot.load_extension(f"extensions.{file[:-3]}")
             logging.info(f"Loaded extension {file[:-3]}")
     logging.info("Done loading extensions")
+    print(os.getenv("CASES_CHANNEL"))
 
 
 bot.run(os.getenv('TOKEN'))
