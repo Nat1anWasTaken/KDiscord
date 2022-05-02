@@ -30,7 +30,7 @@ class Accuse(Modal):
         # Find assignee
         try:
             assignee = await utils.find_user_by_name_and_tag(self.children[1].value, interaction.guild, multiple=False)
-            content = None
+            content = assignee.mention
         except errors.UnparseableText:
             assignee = None
             content = None
