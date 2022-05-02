@@ -29,4 +29,3 @@ class ConfirmCase(Modal):
             # Remove buttons
             new_view = View()
             await interaction.response.edit_message(embed=new_embed, view=new_view)
-

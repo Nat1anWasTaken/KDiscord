@@ -2,9 +2,8 @@ import discord
 import asyncio
 from utils import has_admin
 from discord.ext import commands
-from discord.ui import View
+from discord.ui import View, Button
 from modals.accuse import Accuse
-from buttons.bell import Bell
 from modals.confirm_case import ConfirmCase
 from utils import ErrorEmbed
 
@@ -33,26 +32,10 @@ class Court(commands.Cog):
         """
         if channel is None:
             channel = ctx.channel
-        embed = discord.Embed(title="鈴鐺", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=discord.Colour.blue())
+        embed = discord.Embed(title="提起告訴", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=discord.Colour.blue())
         view = View()
-        view.add_item(Bell(self.bot))
+        view.add_item(Button(label="提起告訴", emoji='🛎️', custom_id="accuse"))
         await channel.send(embed=embed, view=view)
-
-    @commands.Cog.listener(name="on_interaction")
-    async def on_interaction(self, interaction):
-        if interaction.type == discord.InteractionType.component:
-            if interaction.custom_id.startswith("accept."):  # Check if the interaction is an accept button
-                if not await has_admin(member=interaction.user):
-                    await interaction.response.send_message(embed=ErrorEmbed(f"{interaction.user.mention} 你沒有權限使用這個按鈕"), delete_after=3)
-                    return
-
-                case_id = int(interaction.custom_id.split(".")[1])
-                # Check is the case in database
-                case = self.bot.db.cases.find_one({"id": case_id})
-                if case is None:
-                    await interaction.response.send_message(embed=ErrorEmbed(f"{interaction.user.mention} 找不到這個案件"), delete_after=3)
-                    return
-                await interaction.response.send_modal(ConfirmCase(self.bot))
 
 
 def setup(bot):
