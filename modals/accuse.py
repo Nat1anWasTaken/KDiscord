@@ -1,10 +1,9 @@
 import discord
 import errors
 import utils
-from discord.ui import Modal, InputText, View
+from discord.ui import Modal, InputText, View, Button
 from discord import InputTextStyle
 import asyncio
-from buttons.accept import Accept
 import os
 
 
@@ -41,12 +40,27 @@ class Accuse(Modal):
         embed.add_field(name="原因", value=self.children[2].value)
         # Admin Side
         case_message = await self.bot.get_channel(int(os.getenv("CASES_CHANNEL"))).send(content=content,
-                                                                                             embed=embed)
+                                                                                        embed=embed)
         embed.set_footer(text="案件編號: " + str(case_message.id))
         view = View()
-        view.add_item(Accept(bot=self.bot, case_id=case_message.id))
+        view.add_item(Button(label="審理", emoji="✅", style=discord.ButtonStyle.primary, custom_id=f"accept.{case_message.id}"))
         await case_message.edit(content=content, embed=embed, view=view)
         # User Side
         replied_interaction = await interaction.response.send_message(
             content=f"{interaction.user.mention} 你的案件已送出並等待審理!", embed=embed)
         asyncio.get_event_loop().create_task(replied_interaction.delete_original_message(delay=10))
+
+        del replied_interaction, view, embed, content
+
+        # Register the case to database
+        data = {
+            "defendants": [x.id for x in defendants],
+            "assignee": assignee.id if assignee else None,
+            "reason": self.children[2].value,
+            "id": case_message.id,
+            "status": {
+                "accepted": False,
+                "assignee": None
+            }
+        }
+        self.bot.db.cases.insert_one(data)

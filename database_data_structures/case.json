@@ -2,5 +2,9 @@
   "defendants": [],
   "assignee": 111111111111111111,
   "reason": "",
-  "id": 111111111111111111
+  "id": 111111111111111111,
+  "status": {
+    "accepted": false,
+    "assignee": null
+  }
 }
