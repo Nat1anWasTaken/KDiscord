@@ -14,8 +14,7 @@ bot = commands.Bot(command_prefix="k!", intents=intents)
 
 # Connect to mongodb
 mongo = MongoClient(os.getenv("MONGO_DB_URL"), server_api=ServerApi('1'))
-db = mongo.main
-bot.database = db
+bot.db = mongo.main
 
 
 @bot.event
@@ -26,7 +25,6 @@ async def on_ready():
             bot.load_extension(f"extensions.{file[:-3]}")
             logging.info(f"Loaded extension {file[:-3]}")
     logging.info("Done loading extensions")
-    print(os.getenv("CASES_CHANNEL"))
 
 
 bot.run(os.getenv('TOKEN'))

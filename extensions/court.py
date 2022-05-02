@@ -5,6 +5,8 @@ from discord.ext import commands
 from discord.ui import View
 from modals.accuse import Accuse
 from buttons.bell import Bell
+from modals.confirm_case import ConfirmCase
+from utils import ErrorEmbed
 
 
 class Court(commands.Cog):
@@ -41,11 +43,16 @@ class Court(commands.Cog):
         if interaction.type == discord.InteractionType.component:
             if interaction.custom_id.startswith("accept."):  # Check if the interaction is an accept button
                 if not await has_admin(member=interaction.user):
-                    replied_interaction = await interaction.response.send_message(f"{interaction.user.mention} ❌ 你沒有權限使用這個按鈕")
-                    asyncio.get_event_loop().create_task(replied_interaction.delete_original_message(delay=3))
+                    await interaction.response.send_message(embed=ErrorEmbed(f"{interaction.user.mention} 你沒有權限使用這個按鈕"), delete_after=3)
                     return
-                case_id = interaction.custom_id.split(".")[1]
-                await interaction.response.send_message(f"您已接受了案件編號 {case_id} 的告訴")
+
+                case_id = int(interaction.custom_id.split(".")[1])
+                # Check is the case in database
+                case = self.bot.db.cases.find_one({"id": case_id})
+                if case is None:
+                    await interaction.response.send_message(embed=ErrorEmbed(f"{interaction.user.mention} 找不到這個案件"), delete_after=3)
+                    return
+                await interaction.response.send_modal(ConfirmCase(self.bot))
 
 
 def setup(bot):
