@@ -25,8 +25,7 @@ class Accuse(Modal):
         # Find defendants
         defendants = await utils.find_user_by_name_and_tag(self.children[0].value, interaction.guild,
                                                            multiple=True)
-        defendant_strings = []
-        embed.add_field(name="被告人", value=", ".join([x.mention for x in defendants]))
+        embed.add_field(name="被告人", value=", ".join([str(x) for x in defendants]))
 
         # Find assignee
         try:
