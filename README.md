@@ -20,22 +20,13 @@ Before you start, you will need these things:
     ```
 
   ### 2. Edit the configuration and .env
-  Rename the `config.json.example` to `config.json` and fill in the following information:
-    ```json
-    {
-      "channels": {
-        "cases": "Channel ID to send cases notification to (int)"
-      },
-      "admin_roles": [
-        "Role ID to be able to accept cases (int)"
-      ],
-      "owner": "Bot owner's Discord ID (int)"
-    }
-    ```
   Rename the `.env.example` to `.env` and fill in the following information:
     ```
     TOKEN=Discord Bot Token
     MONGO_DB_URL=Your MongoDB URL
+    CASES_CHANNEL=Channel to send new case notifications
+    ADMIN_ROLES=A list of roles ids that allowed to accept cases
+    OWNER=Bot owner ID
     ```
 
   ### 3. Run the bot
