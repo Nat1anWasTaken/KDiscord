@@ -4,7 +4,11 @@ import os
 import discord
 import re
 from errors import *
-import json
+
+
+class ErrorEmbed(discord.Embed):
+    def __init__(self, message):
+        super().__init__(title="❌錯誤", description=message, color=discord.Colour.red())
 
 
 async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: bool = True):
