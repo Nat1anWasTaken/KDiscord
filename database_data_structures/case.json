@@ -5,7 +5,8 @@
   "reason": "",
   "id": 111111111111111111,
   "status": {
-    "status":  "pending/investigation/court/appeal/appeal_court",
-    "assignee": null
+    "status":  "pending/investigation/court/ended",
+    "assignee": null,
+    "appeal": false
   }
 }

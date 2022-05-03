@@ -1,8 +1,7 @@
 import disnake
 from disnake.ext import commands
 from disnake.ui import Button
-from disnake import ButtonStyle
-from modals import Accuse
+from utils.modals import Accuse
 
 
 class Court(commands.Cog):
@@ -23,6 +22,7 @@ class Court(commands.Cog):
     async def send_trigger_message(self, interaction, channel: disnake.TextChannel = None):
         """
         發送觸發訊息
+        :param interaction: Interaction
         :param ctx: Context
         :param channel: The channel to send the message to
         :return:
