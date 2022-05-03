@@ -1,17 +1,17 @@
 import ast
 import os
 
-import discord
+import disnake
 import re
 from errors import *
 
 
-class ErrorEmbed(discord.Embed):
+class ErrorEmbed(disnake.Embed):
     def __init__(self, message):
-        super().__init__(title="❌錯誤", description=message, color=discord.Colour.red())
+        super().__init__(title="❌錯誤", description=message, color=disnake.Colour.red())
 
 
-async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: bool = True):
+async def find_user_by_name_and_tag(text: str, guild: disnake.Guild, multiple: bool = True):
     """
     Find a user by raw text like "NathanTW#9737"
     :param guild: The guild to search in
@@ -36,7 +36,7 @@ async def find_user_by_name_and_tag(text: str, guild: discord.Guild, multiple: b
                 return member
 
 
-async def has_admin(member: discord.Member):
+async def has_admin(member: disnake.Member):
     """
     Check if a member has admin roles
     :param member: The member to check

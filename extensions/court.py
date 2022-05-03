@@ -1,18 +1,15 @@
-import discord
-import asyncio
-from utils import has_admin
-from discord.ext import commands
-from discord.ui import View, Button
-from modals.accuse import Accuse
-from modals.confirm_case import ConfirmCase
-from utils import ErrorEmbed
+import disnake
+from disnake.ext import commands
+from disnake.ui import Button
+from disnake import ButtonStyle
+from modals import Accuse
 
 
 class Court(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="accuse", description="提起一個告訴")
+    @commands.slash_command(name="accuse", description="提起一個告訴", guild_ids=[921645783915319316])
     async def accuse(self, ctx):
         """
         提起一個告訴
@@ -22,8 +19,8 @@ class Court(commands.Cog):
         await ctx.interaction.response.send_modal(Accuse(self.bot))
 
     @commands.is_owner()
-    @commands.command(name="send_trigger_message", description="發送觸發訊息")
-    async def send_trigger_message(self, ctx, channel: discord.TextChannel = None):
+    @commands.slash_command(name="send_trigger_message", description="發送觸發訊息", guild_ids=[921645783915319316])
+    async def send_trigger_message(self, interaction, channel: disnake.TextChannel = None):
         """
         發送觸發訊息
         :param ctx: Context
@@ -31,11 +28,11 @@ class Court(commands.Cog):
         :return:
         """
         if channel is None:
-            channel = ctx.channel
-        embed = discord.Embed(title="提起告訴", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=discord.Colour.blue())
-        view = View()
-        view.add_item(Button(label="提起告訴", emoji='🛎️', custom_id="accuse"))
-        await channel.send(embed=embed, view=view)
+            channel = interaction.channel
+        embed = disnake.Embed(title="提起告訴", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=disnake.Colour.blue())
+        components = [Button(label="提起告訴", emoji='🛎️', custom_id="accuse", style=disnake.ButtonStyle.primary)]
+        await channel.send(embed=embed, components=components)
+        await interaction.response.send_message("Message Sent!", ephemeral=True)
 
 
 def setup(bot):

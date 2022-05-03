@@ -1,2 +1,2 @@
-py-cord==2.0.0b7
+disnake
 pymongo[srv]>=3.12.0

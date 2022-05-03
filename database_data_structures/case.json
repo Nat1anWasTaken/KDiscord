@@ -1,11 +1,11 @@
 {
-  ""
+  "complainant": 111111111111111111,
   "defendants": [],
   "assignee": 111111111111111111,
   "reason": "",
   "id": 111111111111111111,
   "status": {
-    "accepted": false,
+    "status":  "pending/investigation/court/appeal/appeal_court",
     "assignee": null
   }
 }
