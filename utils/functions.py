@@ -1,14 +1,10 @@
 import ast
 import os
+import re
 
 import disnake
-import re
-from errors import *
 
-
-class ErrorEmbed(disnake.Embed):
-    def __init__(self, message):
-        super().__init__(title="❌錯誤", description=message, color=disnake.Colour.red())
+from .errors import *
 
 
 async def find_user_by_name_and_tag(text: str, guild: disnake.Guild, multiple: bool = True):
