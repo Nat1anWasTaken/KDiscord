@@ -2,7 +2,7 @@
 
 Litigation system for Yeecord Community
 
-This project **is current WIP**, it is **NOT WORKING** yet so don't try to host it.**
+This project **is current WIP**, it is **NOT WORKING** yet so don't try to host it.
 
 ## Quickstart
 
