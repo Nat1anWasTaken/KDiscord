@@ -1,6 +1,9 @@
 import disnake
 from disnake.ext import commands
 from disnake.ui import Button
+from utils import SlashCommandCheck
+from utils.embeds import ErrorEmbed
+from utils.errors import NotOwner
 from utils.modals import Accuse
 
 
@@ -17,7 +20,6 @@ class Court(commands.Cog):
         """
         await ctx.interaction.response.send_modal(Accuse(self.bot))
 
-    @commands.is_owner()
     @commands.slash_command(name="send_trigger_message", description="發送觸發訊息", guild_ids=[921645783915319316])
     async def send_trigger_message(self, interaction, channel: disnake.TextChannel = None):
         """
@@ -27,6 +29,12 @@ class Court(commands.Cog):
         :param channel: The channel to send the message to
         :return:
         """
+        try:
+            SlashCommandCheck.is_owner(interaction)
+        except NotOwner:
+            await interaction.response.send_message(embed=ErrorEmbed("你不是機器人擁有者!"))
+            return
+            
         if channel is None:
             channel = interaction.channel
         embed = disnake.Embed(title="提起告訴", description="讀完上面的訴訟說明後，點擊下方按鈕提起告訴", color=disnake.Colour.blue())

@@ -99,7 +99,7 @@ class Buttons(commands.Cog):
         # Update database
         result = self.bot.db.cases.find_one_and_delete({"id": interaction.message.id})
         await interaction.message.delete()
-        await inter.response.edit_message(embed=SuccessEmbed("你移除了這個案件！"), components=[])
+        await inter.response.edit_message(embed=SuccessEmbed("你移除了這個案件!"), components=[])
         user = await self.bot.getch_user(result["complainant"])
         await user.send(embed=ErrorEmbed(f"你的案件已被 {inter.user.mention} 移除"))
 

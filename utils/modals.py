@@ -36,7 +36,7 @@ class Accuse(Modal):
         # Check if the user already have a pending accusation
         data = self.bot.db.cases.find_one({"complainant": interaction.author.id})
         if data is not None:
-            await interaction.response.send_message(embed=ErrorEmbed("一個人最高只能有一個處理中的案件！"), ephemeral=True)
+            await interaction.response.send_message(embed=ErrorEmbed("一個人最高只能有一個處理中的案件!"), ephemeral=True)
             return
         # Find defendants
         defendants = await utils.find_user_by_name_and_tag(interaction.text_values["defendants"],

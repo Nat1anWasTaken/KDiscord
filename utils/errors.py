@@ -4,3 +4,7 @@ class UnparseableText(Exception):
 
 class CaseNotFound(Exception):
     pass
+
+
+class NotOwner(Exception):
+    pass

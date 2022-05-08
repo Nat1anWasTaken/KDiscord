@@ -11,7 +11,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 # Initialize the bot
 intents = disnake.Intents.all()
-bot = commands.Bot(command_prefix="k!", intents=intents)
+bot = commands.Bot(command_prefix="k!", intents=intents, owner_id=int(os.getenv("OWNER_ID")))
 
 # Connect to mongodb
 mongo = MongoClient(os.getenv("MONGO_DB_URL"), server_api=ServerApi('1'))
