@@ -58,10 +58,10 @@ class Accuse(Modal):
             assignee = None
             content = None
 
-        # Generate case ID
-        case_message = await self.bot.get_channel(int(os.getenv("CASES_CHANNEL"))).send("Generating case ID...")
+        # Generate case.py ID
+        case_message = await self.bot.get_channel(int(os.getenv("CASES_CHANNEL"))).send("Generating case.py ID...")
 
-        # Register the case to database
+        # Register the case.py to database
         data = {
             "complainant": interaction.user.id,
             "defendants": [x.id for x in defendants],

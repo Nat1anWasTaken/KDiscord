@@ -32,7 +32,7 @@ class Court(commands.Cog):
         try:
             SlashCommandCheck.is_owner(interaction)
         except NotOwner:
-            await interaction.response.send_message(embed=ErrorEmbed("你不是機器人擁有者!"))
+            await interaction.response.send_message(embed=ErrorEmbed("你不是機器人擁有者!"), ephemeral=True)
             return
             
         if channel is None:

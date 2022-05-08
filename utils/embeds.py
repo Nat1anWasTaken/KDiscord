@@ -31,8 +31,8 @@ class CaseEmbed(disnake.Embed):
         Case Embed Template
         * Only one of case_id or data should be provided.
         :param bot: The bot instance.
-        :param case_id: The case ID.
-        :param data: The case data.
+        :param case_id: The case.py ID.
+        :param data: The case.py data.
         """
         if case_id is None and data is None:
             raise CaseNotFound("Nothing provided")
@@ -64,6 +64,7 @@ class CaseEmbed(disnake.Embed):
             self.add_field(name="被告人", value=", ".join([f"<@{x}>" for x in case_data["defendants"]]))
             self.add_field(name="狀態", value=status)
             self.add_field(name="案件編號", value=case_data["id"])
+            self.add_field(name="原因", value=f"```{case_data['reason']}```")
             self.set_footer(text="KDiscord",
                             icon_url="https://cdn.discordapp.com/avatars/811512708721016832/0cb55ba611065513011b899bb7733d38.png?size=1024")
             return
@@ -89,5 +90,6 @@ class CaseEmbed(disnake.Embed):
             self.add_field(name="被告人", value=", ".join([f"<@{x}>" for x in data["defendants"]]))
             self.add_field(name="狀態", value=status)
             self.add_field(name="案件編號", value=data["id"])
+            self.add_field(name="原因", value=f"```{data['reason']}```")
             self.set_footer(text="KDiscord",
                             icon_url="https://cdn.discordapp.com/avatars/811512708721016832/0cb55ba611065513011b899bb7733d38.png?size=1024")
