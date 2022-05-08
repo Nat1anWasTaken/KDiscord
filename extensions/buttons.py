@@ -39,7 +39,7 @@ class Buttons(commands.Cog):
                                                     ephemeral=True)
             return
 
-        # Check if the use trying to accpet the case the case's wanted-assignee.
+        # Check if the user trying to accept the case is the case's wanted-assignee.
         if not interaction.user.id == case["assignee"] and case["assignee"] is not None:
             message = "你不是這個案件的預期受理人，確定要審理這個案件嗎？"
         else:
